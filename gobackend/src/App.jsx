@@ -37,10 +37,7 @@ function App() {
         setChat(temp.slice(1));
       }
     };
-    const intervalId = setInterval(() => {}, 1000);
-    // Cleanup on component unmount
     return () => {
-      clearInterval(intervalId);
       ws.close();
     };
   });
