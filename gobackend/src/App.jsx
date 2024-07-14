@@ -32,9 +32,9 @@ function App() {
     }
     ws.onmessage = function (event) {
       console.log(event);
-      setChat([...chat(), JSON.parse(event.data)]);
-      if (chat().length > 10) {
-        setChat(chat().slice(1));
+      const temp = [...chat(), JSON.parse(event.data)];
+      if (temp.length > 10) {
+        setChat(temp.slice(1));
       }
     };
     const intervalId = setInterval(() => {}, 1000);
