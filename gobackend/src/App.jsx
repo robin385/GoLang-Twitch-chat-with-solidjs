@@ -43,40 +43,27 @@ function App() {
   });
 
   return (
-    <div class={styles.App}>
-      <header class={styles.header}>
-        <label htmlFor="message">Message:</label>
-        <input type="text" id="message" defaultValue="Your default message" />
-        <label htmlFor="chatter">Chatter:</label>
-        <input type="text" id="chatter" defaultValue="Default Chatter" />
-        <label htmlFor="color">Color:</label>
-        <input type="text" id="color" defaultValue="red" />
-        <button
-          onClick={() => {
-            messageSender();
-          }}>
-          Send
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to reload.
-        </p>
-        <div style={{ "min-width": "400px", width: "400px", height: "300px" }}>
+    <div className={styles.appContainer}>
+      <div className={styles.chatBox}>
+        <div className={styles.messageList}>
           {chat().map((message) => (
-            <div
-              style={{
-                display: "flex",
-                "flex-direction": "row",
-                position: "relative",
-                left: "10px",
-                "font-size": "20px",
-                background: "Black",
-              }}>
-              <div style={{ color: message.color }}>{message.chatter}:</div>
-              <div>{message.message}</div>
+            <div className={styles.messageItem} style={{ borderColor: message.color }}>
+              <span className={styles.chatter} style={{ color: message.color }}>
+                {message.chatter}
+              </span>
+              <span className={styles.message}>{message.message}</span>
             </div>
           ))}
         </div>
-      </header>
+      </div>
+      <div className={styles.inputArea}>
+        <input type="text" id="message" className={styles.input} placeholder="Your message" />
+        <input type="text" id="chatter" className={styles.input} placeholder="Your name" />
+        <input type="color" id="color" className={styles.colorPicker} defaultValue="#ff0000" />
+        <button onClick={messageSender} className={styles.sendButton}>
+          Send
+        </button>
+      </div>
     </div>
   );
 }
