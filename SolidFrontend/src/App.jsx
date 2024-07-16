@@ -49,7 +49,7 @@ function App() {
           {chat().map((message) => (
             <div className={styles.messageItem} style={{ borderColor: message.color }}>
               <span className={styles.chatter} style={{ color: message.color }}>
-                {message.chatter}
+                {message.chatter}:
               </span>
               <span className={styles.message}>{message.message}</span>
             </div>
