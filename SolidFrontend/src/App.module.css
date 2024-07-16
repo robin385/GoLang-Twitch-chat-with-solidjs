@@ -27,13 +27,29 @@
   flex-direction: column;
 }
 
+@keyframes expandToFullSize {
+  from {
+    transform: scale(0); /* Start from not visible */
+  }
+  to {
+    transform: scale(1); /* Expand to full size */
+  }
+}
+
 .messageItem {
   background-color: #333;
   border-left: 4px solid;
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
-  animation: fadeIn 0.3s ease-in;
+}
+.messageItemLast {
+  background-color: #333;
+  border-left: 4px solid;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  animation: expandToFullSize 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes fadeIn {
@@ -59,7 +75,7 @@
 .inputArea {
   display: flex;
   justify-content: center;
-  width: 80%;
+  width: 90%;
   max-width: 600px;
 }
 
@@ -67,6 +83,7 @@
   background-color: #333;
   border: 1px solid #0077ff;
   color: #fff;
+  width: clamp(70px, 30%, 100px);
   padding: 10px;
   margin-right: 10px;
   border-radius: 5px;
@@ -76,6 +93,8 @@
 .colorPicker {
   background-color: #333;
   border: 1px solid #0077ff;
+  width: clamp(60px, 20%, 100px);
+  height: 40px;
   padding: 5px;
   margin-right: 10px;
   border-radius: 5px;

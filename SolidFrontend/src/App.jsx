@@ -10,6 +10,8 @@ function App() {
     const message = document.getElementById("message").value;
     const chatterr = document.getElementById("chatter").value;
     const color = document.getElementById("color").value;
+    if (message === "" || chatterr === "") return;
+    document.getElementById("message").value = "";
 
     const chatter = { chatter: chatterr, message: message, color: color };
 
@@ -19,21 +21,14 @@ function App() {
     }
   };
   onMount(() => {
-    // Replace 'http://localhost:8080' with your WebSocket server address
-
-    // Send random data every second
-    ws.onopen = (e) => {
-      // Send a message to the server
-    };
     if (ws.readyState === WebSocket.OPEN) {
     }
     if (ws.readyState === WebSocket.CLOSED) {
       console.log("WebSocket connection closed");
     }
     ws.onmessage = function (event) {
-      const read = JSON.parse(event.data);
       const temp = [...chat(), JSON.parse(event.data)];
-      if (temp.length > 10) {
+      if (temp.length > 8) {
         setChat(temp.slice(1));
       } else setChat(temp);
     };
@@ -41,15 +36,22 @@ function App() {
       ws.close();
     };
   });
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      messageSender();
+    }
+  };
 
   return (
     <div className={styles.appContainer}>
       <div className={styles.chatBox}>
         <div className={styles.messageList}>
-          {chat().map((message) => (
-            <div className={styles.messageItem} style={{ borderColor: message.color }}>
+          {chat().map((message, index) => (
+            <div
+              className={index === chat().length - 1 ? styles.messageItemLast : styles.messageItem}
+              style={{ borderColor: message.color }}>
               <span className={styles.chatter} style={{ color: message.color }}>
-                {message.chatter}:
+                {message.chatter}:{console.log(index)}
               </span>
               <span className={styles.message}>{message.message}</span>
             </div>
@@ -57,9 +59,15 @@ function App() {
         </div>
       </div>
       <div className={styles.inputArea}>
-        <input type="text" id="message" className={styles.input} placeholder="Your message" />
-        <input type="text" id="chatter" className={styles.input} placeholder="Your name" />
-        <input type="color" id="color" className={styles.colorPicker} defaultValue="#ff0000" />
+        <input type="text" id="message" className={styles.input} placeholder="Your message" onkeydown={handleKeyDown} />
+        <input type="text" id="chatter" className={styles.input} placeholder="Your name" onkeydown={handleKeyDown} />
+        <input
+          type="color"
+          id="color"
+          className={styles.colorPicker}
+          defaultValue="#ff0000"
+          onkeydown={handleKeyDown}
+        />
         <button onClick={messageSender} className={styles.sendButton}>
           Send
         </button>
