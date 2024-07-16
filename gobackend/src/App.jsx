@@ -31,11 +31,11 @@ function App() {
       console.log("WebSocket connection closed");
     }
     ws.onmessage = function (event) {
-      console.log(event);
+      const read = JSON.parse(event.data);
       const temp = [...chat(), JSON.parse(event.data)];
       if (temp.length > 10) {
         setChat(temp.slice(1));
-      }
+      } else setChat(temp);
     };
     return () => {
       ws.close();
